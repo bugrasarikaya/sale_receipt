@@ -32,6 +32,28 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Sepet</title>
+		<style>
+		  #delete_button{
+		      margin-top: 10px;
+  	          margin-left: 50%;
+    		  transform: translateX(-50%);
+    		  width: 30px;
+    		  height: 30px;
+              border: none;
+    		  border-radius: 11px;
+    		  background-image: url(delete.png);
+    		  background-size: 18px auto;
+    		  background-repeat: no-repeat;
+    		  background-position: center;
+    		  background-color: #DD1717;
+		  }
+		  #delete_button:hover{
+		      background-color: #E02E2E;
+			}
+		  #delete_button:active{
+		      background-color: #C61414;
+			}			
+		</style>
 	</head>
 	<body>
 		<?php 
@@ -54,7 +76,7 @@
 	                               ."<td>".product_name($product_id)."</td>"
 	                               ."<td><input type='number' id='quantity_product_".$product_id."' name='quantity_product_".$product_id."' min='1' value='".$quantity."'></td>"
 	                               ."<td>".product_price($product_id)."</td>"
-	                               ."<td></td>"
+                                   ."<td><form action='delete_product.php' method='post'><input type='hidden' id='delete_button' name='product_id' value='".$product_id."'><input type='submit' name='delete_button' id='delete_button' value=''></form></td>"
 	                           ."</tr>";
 	                   }
 	                }
