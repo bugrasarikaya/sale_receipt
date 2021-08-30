@@ -8,6 +8,7 @@
             $sql="SELECT name FROM products WHERE product_id='$product_id'";
             $stmt=$conn->query($sql);
             $sth=$stmt->fetch(\PDO::FETCH_ASSOC);
+            $conn=null;
             return $sth['name'];
         }catch(PDOException $e){
             echo "<br>",$e->getMessage();
@@ -21,6 +22,7 @@
             $sql="SELECT price FROM products WHERE product_id='$product_id'";
             $stmt=$conn->query($sql);
             $sth=$stmt->fetch(\PDO::FETCH_ASSOC);
+            $conn=null;
             return $sth['price'];
         }catch(PDOException $e){
             echo "<br>",$e->getMessage();
@@ -57,11 +59,10 @@
 	</head>
 	<body>
 		<?php 
-		  if(isset($_SESSION['cart'])){
+		  if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
 		      echo "<table>"
                     ."<thead>"
 		              ."<tr>"
-		                  ."<th><input type='checkbox' id='all_check' name='all_check' value='1'></th>"
 	                      ."<th>Ürün</th>"
 		                  ."<th>Ürün Adedi</th>"
 		                  ."<th>Fiyat</th>"
@@ -70,21 +71,25 @@
 		            ."</thead>"
 	                ."<tbody>";
 	                foreach($_SESSION['cart'] as $product_id => $quantity){
-	                   if($quantity!=0){
-	                       echo "<tr>"
-	                               ."<td><input type='checkbox' id='checkbox_product_".$product_id."' name='checkbox_product_".$product_id."' value='1'></td>"
-	                               ."<td>".product_name($product_id)."</td>"
-	                               ."<td><input type='number' id='quantity_product_".$product_id."' name='quantity_product_".$product_id."' min='1' value='".$quantity."'></td>"
-	                               ."<td>".product_price($product_id)."</td>"
-                                   ."<td><form action='delete_product.php' method='post'><input type='hidden' id='delete_button' name='product_id' value='".$product_id."'><input type='submit' name='delete_button' id='delete_button' value=''></form></td>"
-	                           ."</tr>";
-	                   }
+	                   echo "<tr>"
+	                           ."<td>".product_name($product_id)."</td>"
+	                           ."<td><form action='change_quantity_server.php' method='post'><input type='hidden' name='product_id' value='".$product_id."'><input type='number' class='product_quantity' name='product_quantity' min='1' value='".$quantity."' onchange='this.form.submit()'></form></td>"
+                               ."<td>".product_price($product_id)*$quantity."</td>"
+                               ."<td><form action='delete_product_server.php' method='post'><input type='hidden' name='product_id' value='".$product_id."'><input type='submit' name='delete_button' id='delete_button' value=''></form></td>"
+	                       ."</tr>";
 	                }
 	          echo   "</tbody>"
 		            ."</table>";
 		  }else{
-		      echo "<p>Sepetinizde hiç ürün bulunmamaktadır.</p>";
+		      echo   "<p>Sepetinizde hiç ürün bulunmamaktadır.</p>";
 		  }
 		?>
+		<fieldset>
+			<legend>Satış Özeti</legend>
+			<label>Ürün Adedi:</label><label><?php $product_count=0; foreach($_SESSION['cart'] as $product_id => $quantity) $product_count+=$quantity; echo $product_count;?></label><br/>
+			<hr>
+			<label>Ödenecek Tutar:</label><label><?php $cost=0; foreach($_SESSION['cart'] as $product_id => $quantity) $cost+=product_price($product_id)*$quantity; echo $cost; ?></label><br/>
+			<button onclick="window.location.href='customer_info.php'">Satın Al</button>
+		</fieldset>
 	</body>
 </html>
