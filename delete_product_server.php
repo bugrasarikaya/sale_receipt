@@ -1,7 +1,7 @@
 <?php
     if(!isset($_POST) || empty($_POST)){
         header("Location: cart_page.html");
-        exit;
+        exit();
     }
     $product_id=$_POST["product_id"];
     session_start();

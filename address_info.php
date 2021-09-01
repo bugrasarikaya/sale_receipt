@@ -1,9 +1,11 @@
 <?php
     session_start();
     if(!isset($_SESSION['cart']) || empty($_SESSION['cart'])){
-        header("Location: cart_page.html");
-        exit();
+        if(!isset($_SESSION['customer']) || empty($_SESSION['customer'])){
+            header("Location: cart_page.php");
+            exit();
     }
+}
     function product_price($product_id){
         try{
             $dsn="mysql:host=localhost;dbname=receipts_db;charset=utf8";
@@ -23,21 +25,23 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Müşteri Bilgileri</title>
+		<title>Fatura Adresi Bilgileri</title>
 	</head>
 	<body>
-		<form action="customer_info_server.php" method="post" id="customer_info_form">
+		<form action="address_info_server.php" method="post" id="address_info_form">
 			<fieldset>
-				<legend>Müşteri Bilgileri</legend>
-				<label>İsim:<input type="text" name="name" maxlength="40"></label><br />
+				<legend>Fatura Adresi Bilgileri</legend>
+				<label>Ülke<input type="text" name="country" maxlength="40"></label><br />
 				<hr>
-				<label>Soyad:<input type="text" name="surname" maxlength="40"></label><br />
+				<label>İl:<input type="text" name="state" maxlength="40"></label><br />
 				<hr>
-				<label>T.C. Kimlik No:<input type="text" name="personal_id" maxlength="11"></label><br />
+				<label>İlçe:<input type="text" name="city" maxlength="40"></label><br />
 				<hr>
-				<label>Tel:<input type="tel" name="tel" maxlength="11"></label><br />
+				<label>Mahalle:<input type="text" name="street" maxlength="40"></label><br />
 				<hr>
-				<label>E-Posta:<input type="email" name="email" maxlength="60"></label><br />
+				<label>Posta Kodu:<input type="text" name="postal_code" maxlength="6"></label><br />
+				<hr>
+				<label>Adres:<input type="email" name="address" maxlength="100"></label><br />
 			</fieldset>
 		</form>
 		<fieldset>
@@ -45,7 +49,7 @@
 			<label>Ürün Adedi:</label><label><?php $product_count=0; foreach($_SESSION['cart'] as $product_id => $quantity) $product_count+=$quantity; echo $product_count;?></label><br/>
 			<hr>
 			<label>Ödenecek Tutar:</label><label><?php $cost=0; foreach($_SESSION['cart'] as $product_id => $quantity) $cost+=product_price($product_id)*$quantity; echo $cost; ?></label><br/>
-			<button type="submit" form="customer_info_form">Devam Et</button>
+			<button type="submit" form="address_info_form">Devam Et</button>
 		</fieldset>
 	</body>
 </html>
