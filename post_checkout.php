@@ -93,7 +93,7 @@
 		</div>
 		<div id="main_container">
 			<img src="check.png" width="300px" height="300" alt="check">
-			<h2>Siparişiniz tamamlandı.</h2>
+			<h2>Satın alma işlemi tamamlandı.</h2>
 			<form action="receipt.php" method="post" target="_blank">
 				<input type="hidden" name="receipt_id" value="<?php echo $receipt_id; ?>">
 				<input type="submit" id="continue_button" value="Satış Fişini Göster">
