@@ -220,7 +220,7 @@
 	                   echo "<tr>"
 	                           ."<td>".product_name($product_id)."</td>"
 	                           ."<td><form action='change_quantity_server.php' method='post'><input type='hidden' name='product_id' value='".$product_id."'><input type='number' class='input_quantity' name='product_quantity' min='1' value='".$quantity."' onchange='submit_form(this.form)' required></form></td>"
-                               ."<td class='price'>".product_price($product_id)*$quantity."</td>"
+                               ."<td class='price'>".product_price($product_id)*$quantity." TL</td>"
                                ."<td><form action='delete_product_server.php' method='post'><input type='hidden' name='product_id' value='".$product_id."'><input type='submit' name='delete_button' class='delete_button' value=''></form></td>"
 	                       ."</tr>";
 	                }

@@ -217,7 +217,7 @@
 	                   echo "<tr>"
 	                           ."<td>".product_name($product_id)."</td>"
 	                           ."<td class='quantity'>".$quantity."</td>"
-                               ."<td class='price'>".product_price($product_id)*$quantity."</td>"
+                               ."<td class='price'>".product_price($product_id)*$quantity." TL</td>"
 	                       ."</tr>";
 	                }
 		          ?>
