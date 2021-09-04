@@ -3,7 +3,7 @@
     if(!isset($_SESSION['cart']) || empty($_SESSION['cart'])){
         if(!isset($_SESSION['customer']) || empty($_SESSION['customer'])){
             if(!isset($_SESSION['address']) || empty($_SESSION['address'])){
-                header("Location: cart_page.php");
+                header("Location: cart.php");
                 exit();
             }
         }

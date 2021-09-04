@@ -1,6 +1,6 @@
 <?php
     if(!isset($_POST) || empty($_POST)){
-        header("Location: product_catalog.html");
+        header("Location: product_catalog.php");
         exit();
     }
     $product_id=$_POST["product"];
